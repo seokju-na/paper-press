@@ -1,0 +1,30 @@
+{
+  "name": "paper-press",
+  "version": "1.0.0",
+  "description": "Beautiful Static Blogging Service",
+  "main": "./app/app.js",
+  "scripts": {
+    "build": "./node_modules/.bin webpack",
+    "deploy": "./node_modules/.bin webpack && ./node_modules/.bin surge"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seokju-na/paper-press.git"
+  },
+  "author": "seokju-na",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seokju-na/PaperPress/issues"
+  },
+  "homepage": "https://github.com/seokju-na/PaperPress",
+  "dependencies": {
+    "async": "^1.5.2",
+    "express": "^4.13.4",
+    "lodash": "^4.0.1",
+    "remarkable": "^1.6.1",
+    "shortid": "^2.2.4",
+    "surge": "^0.17.7",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {}
+}

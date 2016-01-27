@@ -1,0 +1,3 @@
+[submodule "app/client"]
+	path = app/client
+	url = https://github.com/seokju-na/paper-press-client.git
