@@ -7,6 +7,10 @@ node_modules/
 # Ignore Build Files
 dist/
 
+# Ignore Template Build Files
+src/templates/**/dist
+src/templates/**/gulpfile.js
+
 # Ignore Others
 .DS_Store*
 ehthumbs.db
