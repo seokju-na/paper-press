@@ -1,0 +1,16 @@
+{
+    "name": "default",
+    "build-path": {
+        "dist": "./dist",
+        "js": ["./js/*.js", "./js/**/*.js"],
+        "styles": ["./styles/*.less", "./styles/**/*.less"],
+        "entry-js": "./js/main.js",
+        "entry-styles": "./styles/main.less",
+        "html": "./html/*.html",
+        "libs": "./libs/*.*"
+    },
+    "templates": {
+        "index": "./html/index.html",
+        "paper": "./html/paper.html"
+    }
+}

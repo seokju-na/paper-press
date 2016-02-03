@@ -1,0 +1,341 @@
+#wrapper {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.paper-background {
+    display: block;
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 350px;
+
+    background-color: @color-bromic-side;
+
+    z-index: 50;
+}
+
+
+.paper-post {
+    margin: 64px 0;
+    display: block;
+
+    @media (max-width: 700px) {
+        margin-top: 0;
+    }
+
+    z-index: 100;
+
+    &-inner {
+        display: block;
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+
+    &-header {
+        display: block;
+        box-sizing: content-box;
+        background-color: @color-bromic-header;
+        border-top: 1px solid darken(@color-bromic-header, 2%);
+        padding: 16px 20px;
+
+        &:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+
+        &-profile {
+            display: inline-block;
+            float: left;
+
+            &:after {
+                display: block;
+                content: "";
+                clear: both;
+            }
+
+            &-picture {
+                float: left;
+                display: block;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+            }
+
+            &-author {
+                margin-left: 16px;
+                display: inline-block;
+                float: left;
+                text-align: left;
+
+                &-name {
+                    display: block;
+                    font-size: 18px;
+                    color: @color-material-blue-grey-50;
+                    font-weight: 500;
+                    line-height: 1.2;
+                }
+
+                &-email {
+                    display: block;
+                    margin-top: 4px;
+                    font-size: 12px;
+                    line-height: 1;
+                    font-weight: 300;
+                    color: lighten(@color-bromic-side, 20%);
+                }
+            }
+        }
+    }
+
+    &-headerBar {
+        display: block;
+        height: 5px;
+        background-color: @color-bromic-main;
+
+    }
+
+    &-body {
+        display: block;
+        box-sizing: content-box;
+        background-color: lighten(@color-bromic-background, 20%);
+        border-left: 1px solid darken(@color-bromic-background, 3%);
+        border-right: 1px solid darken(@color-bromic-background, 3%);
+        height: 700px;
+
+        @media (max-width: 700px) {
+            padding: 0 20px;
+        }
+
+        z-index: 150;
+
+        &-inner {
+            display: block;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 32px 0;
+        }
+
+        h1 {
+            margin: 0;
+        }
+    }
+
+    &-tags {
+        display: flex;
+        flex-wrap: wrap;
+
+        background-color: lighten(@color-bromic-background, 20%);
+        border-left: 1px solid darken(@color-bromic-background, 3%);
+        border-right: 1px solid darken(@color-bromic-background, 3%);
+        padding: 16px 16px;
+
+        &__title {
+            display: inline-block;
+            height: 21px;
+            line-height: 13px;
+            font-size: 13px;
+            margin: 4px 16px 2px 0;
+            padding: 4px 8px;
+
+            background-color: darken(@color-bromic-background, 20%);
+            color: @color-material-grey-50;
+
+            border-radius: 4px;
+        }
+
+        &-tag {
+            display: inline-block;
+            height: 21px;
+            line-height: 13px;
+            margin: 4px 16px 2px 0;
+            padding: 4px 2px;
+
+            text-decoration: none;
+            will-change: background-color;
+            transition: background-color .2s ease;
+
+            &:hover, &:focus { background-color: @color-material-grey-200; }
+
+            &-box {
+                display: inline-block;
+                width: 13px;
+                height: 13px;
+                line-height: 13px;
+                border-radius: 2px;
+
+                &.green { background-color: green; }
+                &.yellow { background-color: yellow; }
+                &.teal { background-color: teal; }
+                &.red { background-color: red; }
+                &.purple { background-color: purple; }
+            }
+
+            &-name {
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 4px;
+                font-size: 13px;
+                line-height: 1;
+                font-weight: 300;
+                color: @color-material-grey-800;
+
+                @media (max-width: 700px) {
+                    margin-left: 1px;
+                }
+            }
+        }
+    }
+
+    &-more {
+        display: flex;
+
+        @media (max-width: 700px) {
+            flex-direction: column;
+        }
+
+        &-back {
+            flex: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: @color-bromic-side;
+            text-decoration: none;
+
+            padding: 32px 0;
+
+            color: lighten(@color-bromic-side, 50%);
+            will-change: opacity;
+            transition: opacity .2s ease;
+
+            &:hover { opacity: .85; }
+
+            &-icon {
+                margin-right: 8px;
+                color: lighten(@color-bromic-side, 20%);
+            }
+        }
+
+        &-share {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: lighten(@color-bromic-side, 5%);
+
+            @media (max-width: 700px) {
+                padding: 32px 0;
+            }
+
+            &-item {
+                margin: 0 16px;
+                text-decoration: none;
+                color: lighten(@color-bromic-side, 20%);
+
+                will-change: color;
+                transition: color .2s ease;
+
+                &.facebook:hover { color: @color-facebook; }
+                &.twitter:hover { color: @color-twitter; }
+                &.google:hover { color: @color-google; }
+
+                &-icon {
+                    width: 25px;
+                    height: 25px;
+                    font-size: 25px;
+                    line-height: 25px;
+                }
+            }
+        }
+    }
+
+    &-comment {
+        display: block;
+        background-color: darken(@color-bromic-background, 10%);
+        padding: 64px 0;
+
+        @media (max-width: 700px) {
+            padding: 48px 0;
+        }
+
+        #disqus_thread {
+            display: block !important;
+            max-width: 700px !important;
+            margin: 0 auto !important;
+
+            @media (max-width: 700px) {
+                padding: 0 20px;
+            }
+        }
+    }
+}
+
+
+.paper-footer {
+    display: block;
+    background-color: @color-bromic-side;
+    padding-top: 36px;
+
+    .contact {
+        display: block;
+        max-width: 200px;
+        margin: 0 auto;
+        text-align: center;
+
+        &-item {
+            display: inline-block;
+            margin: 0 8px;
+            text-decoration: none;
+            color: @color-bromic-background;
+
+            will-change: color;
+            transition: color .2s ease;
+
+            &.facebook:hover, &.facebook:focus { color: @color-facebook; }
+            &.twitter:hover, &.twitter:focus { color: @color-twitter; }
+            &.linkedin:hover, &.linkedin:focus { color: @color-linkedin; }
+            &.github:hover, &.github:focus { color: @color-github; }
+
+            &-icon {
+                display: block;
+                width: 25px;
+                height: 25px;
+                font-size: 25px;
+                line-height: 1;
+                margin: 0 auto;
+                padding: 0;
+            }
+        }
+    }
+
+    .copyright {
+        display: block;
+        padding: 12px 0 30px 0;
+        background-color: @color-bromic-side;
+
+        &-text {
+            display: block;
+            font-size: 12px;
+            font-weight: 300;
+            text-align: center;
+            color: lighten(@color-bromic-side, 50%);
+
+            a {
+                text-decoration: none;
+                color: lighten(@color-bromic-side, 75%);
+            }
+        }
+
+    }
+}
+

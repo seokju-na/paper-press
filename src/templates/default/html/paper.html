@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= paper.title %></title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="../favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+
+    <link rel="stylesheet" href="../font-awesome.min.css">
+    <link rel="stylesheet" href="../main.css"/>
+</head>
+<body>
+
+<div id="wrapper">
+    <div class="paper-background"></div>
+
+    <div class="paper-post">
+        <div class="paper-post-inner">
+            <div class="paper-post-header">
+                <div class="paper-post-header-profile">
+                    <img class="paper-post-header-profile-picture" src="http://placehold.it/300x300"/>
+                    <div class="paper-post-header-profile-author">
+                        <span class="paper-post-header-profile-author-name"><%= blog.author %></span>
+                        <span class="paper-post-header-profile-author-email"><%= blog.email %></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="paper-post-headerBar"></div>
+
+            <div class="paper-post-body">
+                <div class="paper-post-body-inner">
+                    <%- renderedMarkdown %>
+                </div>
+            </div>
+
+            <div class="paper-post-tags">
+                <span class="paper-post-tags__title">TAGS</span>
+
+                <%
+                    var getColor = function(tagName) {
+                        for (var idx=0; idx<tags.length; idx++)
+                            if (tags[idx]['name'] === tagName) return tagColors[idx];
+                    };
+
+                    for(var idx=0; idx<paper['tags'].length; idx++) {
+                        var tagName = paper['tags'][idx]; %>
+
+                        <a class="paper-post-tags-tag" href="/#<%= tagName %>">
+                            <span class="paper-post-tags-tag-box" style="background-color: <%= getColor(tagName); %>"></span>
+                            <span class="paper-post-tags-tag-name"><%= tagName %></span>
+                        </a>
+                <% } %>
+            </div>
+
+            <div class="paper-post-headerBar"></div>
+
+            <div class="paper-post-more">
+                <a class="paper-post-more-back" href="/">
+                    <i class="fa fa-undo paper-post-more-back-icon"></i>
+                    <span class="paper-post-more-back-name">홈으로 돌아가기</span>
+                </a>
+
+                <div class="paper-post-more-share">
+                    <a class="paper-post-more-share-item facebook" target="_blank"
+                       href="http://www.facebook.com/sharer/sharer.php?u=http://naver.com/">
+                        <i class="fa fa-facebook paper-post-more-share-item-icon"></i>
+                    </a>
+                    <a class="paper-post-more-share-item twitter" target="_blank"
+                       href="https://twitter.com/share?url=http://naver.com/">
+                        <i class="fa fa-twitter paper-post-more-share-item-icon"></i>
+                    </a>
+                    <a class="paper-post-more-share-item google" target="_blank"
+                       href="https://plus.google.com/share?url=http://naver.com/">
+                        <i class="fa fa-google-plus paper-post-more-share-item-icon"></i>
+                    </a>
+                </div>
+
+            </div>
+            <div class="paper-post-comment">
+                <div id="disqus_thread"></div>
+                <script>
+                    (function () {
+                        var d = document, s = d.createElement('script');
+
+                        s.src = '//<%= blog.disqus %>.disqus.com/embed.js';
+
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="paper-footer">
+        <div class="contact">
+            <a class="contact-item facebook" href="#">
+                <i class="fa fa-facebook-official contact-item-icon"></i>
+            </a>
+            <a class="contact-item twitter" href="#">
+                <i class="fa fa-twitter contact-item-icon"></i>
+            </a>
+            <a class="contact-item linkedin" href="#">
+                <i class="fa fa-linkedin contact-item-icon"></i>
+            </a>
+            <a class="contact-item github" href="#">
+                <i class="fa fa-github contact-item-icon"></i>
+            </a>
+        </div>
+        <div class="copyright">
+            <span class="copyright-text">Copyright. 2016 &#169; <%= blog.name %></span>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../main.js"></script>
+</body>
+</html>

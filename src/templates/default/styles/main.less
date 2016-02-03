@@ -1,0 +1,67 @@
+@color-bromic-header: #222831;
+@color-bromic-side: #393E46;
+@color-bromic-main: #00ADB5;
+@color-bromic-background: #EEEEEE;
+
+@color-material-grey-50: #FAFAFA;
+@color-material-grey-100: #F5F5F5;
+@color-material-grey-200: #EEEEEE;
+@color-material-grey-300: #E0E0E0;
+@color-material-grey-400: #BDBDBD;
+@color-material-grey-500: #9E9E9E;
+@color-material-grey-600: #757575;
+@color-material-grey-700: #616161;
+@color-material-grey-800: #424242;
+@color-material-grey-900: #212121;
+
+@color-material-blue-grey-50: #ECEFF1;
+@color-material-blue-grey-100: #CFD8DC;
+@color-material-blue-grey-200: #B0BEC5;
+@color-material-blue-grey-300: #90A4AE;
+@color-material-blue-grey-400: #78909C;
+@color-material-blue-grey-500: #607D8B;
+@color-material-blue-grey-600: #546E7A;
+@color-material-blue-grey-700: #455A64;
+@color-material-blue-grey-800: #37474F;
+@color-material-blue-grey-900: #263238;
+
+@color-facebook: #3B5998;
+@color-twitter: #55ACEE;
+@color-linkedin: #0077B5;
+@color-github: #231815;
+@color-google: #DC4E41;
+
+@font-default: 'Helvetica Neue', STHeiti, 'Segoe UI', Arial, sans-serif;
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    font-family: @font-default;
+    font-size: 16px;
+    line-height: 1.6;
+    color: @color-material-grey-900;
+    text-rendering: optimizeSpeed;
+
+    background-color: #EEEEEE;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    @media (max-width: 720px) {
+        display: block;
+    }
+}
+
+@import "./index.less";
+@import "./paper.less";
