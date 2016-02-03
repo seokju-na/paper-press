@@ -1,11 +1,10 @@
 var gulp = require('gulp');
 
 var imageop = require('gulp-image-optimization');
-var ejs = require('gulp-ejs');
 var less = require('gulp-less');
 var concat = require('gulp-concat');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
-    autoprefix = new LessPluginAutoPrefix({ browsers: ["last 2 versions"] });
+    autoprefix = new LessPluginAutoPrefix({});
 var minifyCss = require('gulp-minify-css');
 
 var buffer = require('vinyl-buffer');
@@ -14,20 +13,27 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 
 
+const blogJSON = require('./src/blog.config.json');
+const templateConfigJSON = require('./src/templates/' +
+    blogJSON['template'] + '/pp.config.json');
 
 const paths = {
     src: './src',
     dist: './dist',
-    entry: './src/main.js',
-    styles: ['./src/styles/*.less', './src/styles/**/*.less'],
     images: ['./src/assets/imgs/*.png', './src/assets/imgs/*.jpg',
         './src/assets/imgs/*.jpeg', './src/assets/imgs/*.gif'],
     favicon: './src/assets/favicon/*.*',
-    index: './src/templates/index.html'
+    js: './src/templates/' +
+        templateConfigJSON['name'] + '/' +
+        templateConfigJSON['build-path']['entry-js'],
+    styles: './src/templates/' +
+        templateConfigJSON['name'] + '/' +
+        templateConfigJSON['build-path']['entry-styles'],
+    libs: './src/templates/' +
+        templateConfigJSON['name'] + '/' +
+        templateConfigJSON['build-path']['libs']
 };
 
-var blogJSON = require('./src/blog.json');
-delete blogJSON['posts'];
 
 gulp.task('imgs', function(cb) {
     gulp.src(paths.images)
@@ -52,21 +58,8 @@ gulp.task('favicon', function(cb) {
         });
 });
 
-gulp.task('html', function(cb) {
-    gulp.src(paths.index)
-        .pipe(ejs({
-            blog: blogJSON
-        }))
-        .pipe(gulp.dest(paths.dist))
-        .on('end', cb)
-        .on('error', function(err) {
-            throw err;
-        });
-});
-
-
 gulp.task('js', function() {
-    return browserify('./src/main.js')
+    return browserify(paths.js)
         .bundle()
         .pipe(source('main.js'))
         .pipe(buffer())
@@ -89,4 +82,13 @@ gulp.task('styles', function(cb) {
         });
 });
 
-gulp.task('default', ['imgs', 'favicon', 'html', 'js', 'styles']);
+gulp.task('libs', function(cb) {
+    gulp.src(paths.libs)
+        .pipe(gulp.dest(paths.dist))
+        .on('end', cb)
+        .on('error', function(err) {
+            throw err;
+        });
+});
+
+gulp.task('default', ['imgs', 'favicon', 'js', 'styles', 'libs']);
