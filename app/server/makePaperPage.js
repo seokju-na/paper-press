@@ -2,40 +2,30 @@ var fs = require('fs');
 var async = require('async');
 var _ = require('underscore');
 var ejs = require('ejs');
-
-//var htmlmin = require('htmlmin');
-
 var Remarkable = require('remarkable');
 var md = new Remarkable();
 
-const postsPath = __dirname + '/../../src/posts';
-const templatesPath = __dirname + '/../../src/templates';
-const htmlDistPath = __dirname + '/../../dist';
+const paths = require('../utils/paths');
 
-var _postTemplateData = null;
+var _paperTemplateData = null;
+var _templateConfigJSON = null;
+var _templatePath = null;
 var _blogJSON = null;
 
 
-
-/**
- *
- * @param fileData: Markdown File Data
- * @return Success or Failed for write data
- */
-var _renderHtml = function(fileName, fileData, _callback) {
+function _renderHtml(fileName, fileData, _callback) {
     var renderedMarkdown = md.render(fileData);
 
     async.waterfall([
         function(callback) {
-            _getTemplateFileData(function(data) {
+            _getPaperTemplateData(function(data) {
                 var blog = _.clone(_blogJSON);
-                delete blog['posts'];
+                var paper = blog['papers'][fileName];
+                delete blog['papers'];
 
                 var htmlDistData = ejs.render(data, {
                     blog: blog,
-                    post: {
-                        title: 'Test'
-                    },
+                    paper: paper,
                     renderedMarkdown: renderedMarkdown
                 });
 
@@ -45,7 +35,7 @@ var _renderHtml = function(fileName, fileData, _callback) {
         function(htmlDistData, callback) {
             fileName = fileName.split('.')[0];
 
-            fs.writeFile(htmlDistPath + '/' + fileName + '.html',
+            fs.writeFile(paths.DIST + fileName + '.html',
                 htmlDistData, 'utf8',
                 function(err) {
                     if (err) throw err;
@@ -57,25 +47,27 @@ var _renderHtml = function(fileName, fileData, _callback) {
         console.log(res + '.html File Saved Successful!');
         _callback(null);
     });
-};
+}
 
-var _getTemplateFileData = function(callback) {
-    if (_postTemplateData !== null) {
-        return callback(_postTemplateData);
+function _getPaperTemplateData(callback) {
+    if (_paperTemplateData !== null) {
+        return callback(_paperTemplateData);
     }
 
-    fs.readFile(templatesPath + '/post.ejs', 'utf8', function(err, data) {
-        if (err) throw err;
-        _postTemplateData = data;
-        callback(_postTemplateData);
-    });
-};
+    fs.readFile(_templatePath + _templateConfigJSON['templates']['paper'],
+        'utf8',
+        function(err, data) {
+            if (err) throw err;
+            _paperTemplateData = data;
+            callback(_paperTemplateData);
+        });
+}
 
-var _renderEachFiles = function(files, _callback) {
+function _renderEachFiles(files, _callback) {
     var tasks = _.map(files, function(fileName) {
         return function(callback) {
             var _fileName = this.fileName;
-            fs.readFile(postsPath + '/' + _fileName, 'utf8', function(err, data) {
+            fs.readFile(paths.PAPERS + _fileName, 'utf8', function(err, data) {
                 _renderHtml(_fileName, data, callback);
             });
         }.bind({ fileName: fileName });
@@ -85,15 +77,17 @@ var _renderEachFiles = function(files, _callback) {
         if (err) throw err;
         _callback(null);
     });
-};
+}
 
 
 var makeHtml = function() {
-    _blogJSON = require('../../src/blog.json');
+    _blogJSON = require(paths.BLOG_JSON);
+    _templatePath = paths.TEMPLATES + _blogJSON['template'] + '/';
+    _templateConfigJSON = require(_templatePath + 'pp.config.json');
 
     async.waterfall([
         function(callback) {
-            fs.readdir(postsPath, function(err, files) {
+            fs.readdir(paths.PAPERS, function(err, files) {
                 if (err) throw err;
                 callback(null, files);
             });
