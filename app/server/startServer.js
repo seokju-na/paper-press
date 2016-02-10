@@ -15,6 +15,7 @@ var startServer = function(callback) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(express.static(paths.CLIENT));
+    app.use(express.static(paths.IMGS));
 
     app.get('/', function(req,res) {
         res.render('index');

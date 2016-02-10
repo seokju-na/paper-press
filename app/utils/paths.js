@@ -1,5 +1,6 @@
 module.exports = {
-    CLIENT: __dirname + '/client/dist',
+    CLIENT: __dirname + '/../client/dist',
+    IMGS: __dirname + '/../../src/assets/imgs',
     SRC: __dirname + '/../../src/',
     BLOG_JSON: __dirname + '/../../src/blog.config.json',
     PAPERS: __dirname + '/../../src/papers/',
