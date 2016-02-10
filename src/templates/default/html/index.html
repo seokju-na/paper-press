@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +30,7 @@
 
     <div class="aside">
         <div class="profile">
-            <img class="profile-picture" src="http://placehold.it/300x300"/>
+            <img class="profile-picture" src="profile.png"/>
             <div class="profile-author">
                 <span class="profile-author-name"><%= blog.author %></span>
                 <span class="profile-author-email"><%= blog.email %></span>
@@ -118,16 +118,13 @@
 
 <div class="footer">
     <div class="contact">
-        <a class="contact-item facebook" href="#">
+        <a class="contact-item facebook" href="http://facebook.com/<%= blog.facebook %>">
             <i class="fa fa-facebook-official contact-item-icon"></i>
         </a>
-        <a class="contact-item twitter" href="#">
+        <a class="contact-item twitter" href="http://twitter.com/<%= blog.twitter %>">
             <i class="fa fa-twitter contact-item-icon"></i>
         </a>
-        <a class="contact-item linkedin" href="#">
-            <i class="fa fa-linkedin contact-item-icon"></i>
-        </a>
-        <a class="contact-item github" href="#">
+        <a class="contact-item github" href="http://github.com/<%= blog.github %>">
             <i class="fa fa-github contact-item-icon"></i>
         </a>
     </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,8 @@
     <link rel="icon" type="image/png" sizes="96x96" href="../favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
 
-    <link rel="stylesheet" href="../font-awesome.min.css">
+    <link rel="stylesheet" href="../font-awesome.min.css"/>
+    <link rel="stylesheet" href="../highlight.css"/>
     <link rel="stylesheet" href="../main.css"/>
 </head>
 <body>
@@ -32,7 +33,7 @@
         <div class="paper-post-inner">
             <div class="paper-post-header">
                 <div class="paper-post-header-profile">
-                    <img class="paper-post-header-profile-picture" src="http://placehold.it/300x300"/>
+                    <img class="paper-post-header-profile-picture" src="../profile.png"/>
                     <div class="paper-post-header-profile-author">
                         <span class="paper-post-header-profile-author-name"><%= blog.author %></span>
                         <span class="paper-post-header-profile-author-email"><%= blog.email %></span>
@@ -44,6 +45,19 @@
             <div class="paper-post-headerBar"></div>
 
             <div class="paper-post-body">
+                <span class="paper-post-body-title"><%= paper.title %></span>
+                <span class="paper-post-body-date"><%= date %></span>
+                <%
+                    var titleImageClass =
+                        (paper['titleImage'] !== '') ? 'paper-post-body-titleImage' : '';
+                    var summaryClass =
+                        (paper['summary'] !== '') ? 'paper-post-body-summary' : '';
+
+                    if (paper['titleImage'].search('http://') === -1)
+                        paper['titleImage'] = '../' + paper['titleImage'];
+                %>
+                <img class="<%= titleImageClass %>" src="<%= paper['titleImage'] %>" />
+                <span class="<%= summaryClass %>"><%= paper['summary'] %></span>
                 <div class="paper-post-body-inner">
                     <%- renderedMarkdown %>
                 </div>
@@ -78,15 +92,15 @@
 
                 <div class="paper-post-more-share">
                     <a class="paper-post-more-share-item facebook" target="_blank"
-                       href="http://www.facebook.com/sharer/sharer.php?u=http://naver.com/">
+                       href="http://www.facebook.com/sharer/sharer.php?u=http://<%= blog.domain %>/<%= paperId %>">
                         <i class="fa fa-facebook paper-post-more-share-item-icon"></i>
                     </a>
                     <a class="paper-post-more-share-item twitter" target="_blank"
-                       href="https://twitter.com/share?url=http://naver.com/">
+                       href="https://twitter.com/share?url=http://<%= blog.domain %>/<%= paperId %>">
                         <i class="fa fa-twitter paper-post-more-share-item-icon"></i>
                     </a>
                     <a class="paper-post-more-share-item google" target="_blank"
-                       href="https://plus.google.com/share?url=http://naver.com/">
+                       href="https://plus.google.com/share?url=http://<%= blog.domain %>/<%= paperId %>">
                         <i class="fa fa-google-plus paper-post-more-share-item-icon"></i>
                     </a>
                 </div>
@@ -110,16 +124,13 @@
 
     <div class="paper-footer">
         <div class="contact">
-            <a class="contact-item facebook" href="#">
+            <a class="contact-item facebook" href="http://facebook.com/<%= blog.facebook %>">
                 <i class="fa fa-facebook-official contact-item-icon"></i>
             </a>
-            <a class="contact-item twitter" href="#">
+            <a class="contact-item twitter" href="http://twitter.com/<%= blog.twitter %>">
                 <i class="fa fa-twitter contact-item-icon"></i>
             </a>
-            <a class="contact-item linkedin" href="#">
-                <i class="fa fa-linkedin contact-item-icon"></i>
-            </a>
-            <a class="contact-item github" href="#">
+            <a class="contact-item github" href="http://github.com/<%= blog.github %>">
                 <i class="fa fa-github contact-item-icon"></i>
             </a>
         </div>
