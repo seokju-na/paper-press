@@ -6,6 +6,7 @@ node_modules/
 
 # Ignore Build Files
 dist/
+src/papers
 
 # Ignore Template Build Files
 src/templates/**/dist
