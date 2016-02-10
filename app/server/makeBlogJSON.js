@@ -1,12 +1,13 @@
 var fs = require('fs');
 var async = require('async');
 var colors = require('colors');
+var _ = require('underscore');
 var readline = require('readline');
 const rl = readline.createInterface(process.stdin, process.stdout);
 
 const errorCodes = require('../utils/errorCodes');
 const paths = require('../utils/paths');
-
+const templates = require('../utils/templates.json');
 
 function _checkIfHasCorrectBlogInfo() {
     var _hasBlogInfo = true;
@@ -28,6 +29,9 @@ function _checkIfHasCorrectBlogInfo() {
         if (!(blogJSON.hasOwnProperty('name') &&
             blogJSON.hasOwnProperty('author') &&
             blogJSON.hasOwnProperty('domain') &&
+            blogJSON.hasOwnProperty('facebook') &&
+            blogJSON.hasOwnProperty('twitter') &&
+            blogJSON.hasOwnProperty('github') &&
             blogJSON.hasOwnProperty('template') &&
             blogJSON.hasOwnProperty('disqus') &&
             blogJSON.hasOwnProperty('email') &&
@@ -56,21 +60,48 @@ var makeBlogJSON = function(_callback) {
         async.waterfall([
             function(callback) {
                 rl.question("- What's your blog name?: ", function(answer) {
+                    if (_.isEmpty(answer)) answer = 'My Blog';
                     newBlogInfo['name'] = answer;
                     callback(null);
                 });
             },
             function(callback) {
                 rl.question("- What's your(author) name?: ", function(answer) {
+                    if (_.isEmpty(answer)) answer = 'Mr. Na';
                     newBlogInfo['author'] = answer;
                     callback(null);
                 });
             },
             function(callback) {
                 rl.question("- What's your email?: ", function(answer) {
+                    if (_.isEmpty(answer)) answer = 'na@my.domain.com';
                     newBlogInfo['email'] = answer;
                     callback(null);
                 });
+            },
+            function(callback) {
+                rl.question(
+                    "- What's your facebook ID? (If your don't have, skip this question): ",
+                    function(answer) {
+                        newBlogInfo['facebook'] = answer;
+                        callback(null);
+                    });
+            },
+            function(callback) {
+                rl.question(
+                    "- What's your twitter ID? (If your don't have, skip this question): ",
+                    function(answer) {
+                        newBlogInfo['twitter'] = answer;
+                        callback(null);
+                    });
+            },
+            function(callback) {
+                rl.question(
+                    "- What's your github ID? (If your don't have, skip this question): ",
+                    function(answer) {
+                        newBlogInfo['github'] = answer;
+                        callback(null);
+                    });
             },
             function(callback) {
                 rl.question("- What's your Disqus URL? \n" +
@@ -91,6 +122,8 @@ var makeBlogJSON = function(_callback) {
                         newBlogInfo['template'] = 'default';
                     else newBlogInfo['template'] = answer;
 
+                    if (!_.contains(templates, answer)) answer = 'default';
+
                     callback(null);
                 });
             },
@@ -107,6 +140,7 @@ var makeBlogJSON = function(_callback) {
                     });
             },
             function(callback) {
+                console.log(" ");
                 console.log("About to write 'blog.json': ");
                 console.log(" ");
                 _logBlogJSON(newBlogInfo);
@@ -129,6 +163,7 @@ var makeBlogJSON = function(_callback) {
                         else {
                             console.log("Blog configure file successfully saved in " +
                                 "src/blog.json".bold + "!");
+                            console.log(" ");
                             callback(null);
                         }
                     }
