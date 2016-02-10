@@ -94,12 +94,18 @@ function _renderIndexHTML(_callback) {
                 _receivingData['tags'] = tags;
                 _receivingData['tagColors'] = colors(tagCount);
 
-                var htmlDistData = ejs.render(htmlData, {
-                    blog: _blogJSON,
-                    tags: tags,
-                    tagColors:  _receivingData['tagColors'],
-                    tagAllCount: tagAllCount
-                });
+                try {
+                    var htmlDistData = ejs.render(htmlData, {
+                        blog: _blogJSON,
+                        tags: tags,
+                        tagColors:  _receivingData['tagColors'],
+                        tagAllCount: tagAllCount
+                    });
+                } catch (e) {
+                    console.log(e);
+                    callback(e);
+                }
+
                 callback(null, htmlDistData);
             });
         },
@@ -114,7 +120,7 @@ function _renderIndexHTML(_callback) {
         }
     ], function(err, res) {
         if (err) _callback(err);
-        else _callback();
+        else _callback(null);
     });
 }
 
@@ -128,7 +134,7 @@ var makeIndexPage = function(_callback) {
 
     _renderIndexHTML(function(err) {
         if (err) _callback(err);
-        else _callback(_receivingData);
+        else _callback(null, _receivingData);
     });
 };
 

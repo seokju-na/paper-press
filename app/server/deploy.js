@@ -1,3 +1,4 @@
+var fs = require('fs');
 var exec = require('child_process').exec;
 var async = require('async');
 
@@ -8,10 +9,21 @@ const errorCodes = require('../utils/errorCodes');
 var makeIndexPage = require('./makeIndexPage');
 var makePaperPage = require('./makePaperPage');
 
+var _blogJSON = null;
 
 var deploy = function(_callback) {
 
     async.waterfall([
+        function(callback) {
+            fs.readFile(paths.BLOG_JSON, 'utf8', function(err, data) {
+                if (err) callback(errorCodes.READ_BLOG_JSON);
+                else {
+                    _blogJSON = JSON.parse(data);
+                    callback(null);
+                }
+            });
+        },
+
         function(callback) {
             makeIndexPage(function(err, data) {
                 if (err) callback(err);
@@ -41,7 +53,7 @@ var deploy = function(_callback) {
         },
 
         function(callback) {
-            exec(paths.SURGE + ' -p ' + paths.DIST + ' -d my-project.surge.sh',
+            exec(paths.SURGE + ' -p ' + paths.DIST + ' -d ' + _blogJSON['domain'],
                 function(err, stdout, stderr) {
                     if (err) callback(errorCodes.SURGE_DEPLOY);
                     else callback(null);
@@ -50,7 +62,12 @@ var deploy = function(_callback) {
 
     ], function(err, res) {
         if (err) _callback(err);
-        else _callback(null);
+        else {
+            console.log("[paper-press] ".green + "" +
+                "Blog deployed on " + "http://".bold +
+                (_blogJSON['domain'].toString()).bold);
+            _callback(null);
+        }
     });
 };
 

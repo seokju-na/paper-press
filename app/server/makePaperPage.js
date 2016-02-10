@@ -4,7 +4,26 @@ var _ = require('underscore');
 var ejs = require('ejs');
 var htmlmin = require('htmlmin');
 var Remarkable = require('remarkable');
-var md = new Remarkable();
+var hljs = require('highlight.js');
+var md = new Remarkable({
+    html: true,
+    xhtmlOut: false,
+    breaks: true,
+    linkify: false,
+    highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return hljs.highlight(lang, str).value;
+            } catch (err) {}
+        }
+
+        try {
+            return hljs.highlightAuto(str).value;
+        } catch (err) {}
+
+        return '';
+    }
+});
 
 const paths = require('../utils/paths');
 const errorCodes = require('../utils/errorCodes');
@@ -23,18 +42,31 @@ function _renderHtml(fileName, fileData, _callback) {
 
     async.waterfall([
         function(callback) {
-            _getPaperTemplateData(function(data) {
+            _getPaperTemplateData(function() {
                 var blog = _.clone(_blogJSON);
                 var paper = blog['papers'][paperId];
                 delete blog['papers'];
 
-                var htmlDistData = ejs.render(data, {
-                    blog: blog,
-                    paper: paper,
-                    tags: _receivedData['tags'],
-                    tagColors: _receivedData['tagColors'],
-                    renderedMarkdown: renderedMarkdown
-                });
+                var date = (function(date) {
+                    var _date = new Date(date);
+                    return "- " + _date.getFullYear() + "년 " +
+                        (_date.getMonth() + 1) + "월 " +
+                        (_date.getDate()) + "일";
+                })(paper['date']);
+
+                try {
+                    var htmlDistData = ejs.render(_paperTemplateData, {
+                        blog: blog,
+                        paper: paper,
+                        paperId: paperId,
+                        tags: _receivedData['tags'],
+                        date: date,
+                        tagColors: _receivedData['tagColors'],
+                        renderedMarkdown: renderedMarkdown
+                    });
+                } catch(e) {
+                    callback(e);
+                }
 
                 callback(null, htmlDistData);
             });
@@ -88,12 +120,7 @@ function _renderEachFiles(files, _callback) {
 }
 
 
-var makePaperPage = function(err, receivedData, _callback) {
-    if (err) {
-        _callback(err);
-        return;
-    }
-
+var makePaperPage = function(receivedData, _callback) {
     _blogJSON = require(paths.BLOG_JSON);
     _templatePath = paths.TEMPLATES + _blogJSON['template'] + '/';
     _templateConfigJSON = require(_templatePath + 'pp.config.json');
