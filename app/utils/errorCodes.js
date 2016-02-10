@@ -1,6 +1,7 @@
 var keyMirror = require('keymirror');
 
 const ErrorCodes = keyMirror({
+    READ_BLOG_JSON: null,
     WRITE_BLOG_JSON: null,
     READ_DIR_OF_PAPERS: null,
     WRITE_PAPER: null,
@@ -10,7 +11,8 @@ const ErrorCodes = keyMirror({
     SURGE_DEPLOY: null,
     SURGE_LOGIN: null,
     MODULE_INSTALL: null,
-    ABORTED: null
+    ABORTED: null,
+    UNLINK_PAPER: null
 });
 
 module.exports = ErrorCodes;
