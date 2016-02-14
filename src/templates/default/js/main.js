@@ -11,8 +11,6 @@ function app(pathname) {
             if (location.hash === '#' || location.hash === '') initHash = null;
             else initHash = location.hash.slice(1, location.hash.length);
 
-            console.log("initHash", initHash);
-
             menuBtn();
             paperList(initHash);
             break;

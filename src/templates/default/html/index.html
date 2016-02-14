@@ -6,19 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= blog.name %></title>
 
-    <link rel="apple-touch-icon" sizes="57x57" href="./favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="./favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="./favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="./favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="./favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="./favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="./favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="./favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="./favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="./favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="./favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./favicon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="./favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="./favicon/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="./favicon/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="./favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="./favicon/manifest.json">
+    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="./favicon/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="font-awesome.min.css">
     <link rel="stylesheet" href="main.css">
@@ -64,6 +70,8 @@
     <div class="content">
         <div id="paper-list" class="paper-list">
             <%
+            var index = 0;
+
             for (var prop in blog.papers) {
                 var paper = blog.papers[prop];
 
@@ -90,8 +98,8 @@
             <div class="paper" tags="<%= paperTags %>">
                 <div class="paper-main">
                             <span class="paper-main-header">
-                                <a class="paper-main-header-title" href="/<%= prop %>"><%= paper.title %></a>
-                                <span class="paper-main-header-date">2015년 10월 26일</span>
+                                <a class="paper-main-header-title" href="/<%= paper.paperId %>"><%= paper.title %></a>
+                                <span class="paper-main-header-date"><%= dates[index] %></span>
                             </span>
                     <span class="paper-main-summary"><%= summary %></span>
                     <div class="paper-main-categories">
@@ -108,7 +116,7 @@
                 <div class="paper-side" style="<%= titleImage %>"></div>
             </div>
 
-            <% } %>
+            <% index++; } %>
 
         </div>
     </div>
@@ -118,15 +126,24 @@
 
 <div class="footer">
     <div class="contact">
-        <a class="contact-item facebook" href="http://facebook.com/<%= blog.facebook %>">
-            <i class="fa fa-facebook-official contact-item-icon"></i>
-        </a>
-        <a class="contact-item twitter" href="http://twitter.com/<%= blog.twitter %>">
-            <i class="fa fa-twitter contact-item-icon"></i>
-        </a>
-        <a class="contact-item github" href="http://github.com/<%= blog.github %>">
-            <i class="fa fa-github contact-item-icon"></i>
-        </a>
+        <%
+            if (blog.facebook !== '') { %>
+                <a class="contact-item facebook" href="http://facebook.com/<%= blog.facebook %>">
+                    <i class="fa fa-facebook-official contact-item-icon"></i>
+                </a>
+        <% } %>
+        <%
+            if (blog.twitter !== '') { %>
+                <a class="contact-item twitter" href="http://twitter.com/<%= blog.twitter %>">
+                    <i class="fa fa-twitter contact-item-icon"></i>
+                </a>
+        <% } %>
+        <%
+            if (blog.github !== '') { %>
+                <a class="contact-item github" href="http://github.com/<%= blog.github %>">
+                    <i class="fa fa-github contact-item-icon"></i>
+                </a>
+        <% } %>
     </div>
     <div class="copyright">
         <span class="copyright-text">Copyright. 2016 &#169; <%= blog.name %></span>

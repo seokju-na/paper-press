@@ -29,13 +29,15 @@
     }
 
     .aside {
-        display: block;
+        display: flex;
+        flex-direction: column;
         flex: none;
         width: 250px;
         background-color: @color-bromic-side;
         z-index: 100;
 
         @media (max-width: 720px) {
+            display: block;
             width: 100%;
         }
 
@@ -58,7 +60,7 @@
             &-picture {
                 display: block;
                 width: 150px;
-                height: auto;
+                height: 150px;
 
                 margin: 0 auto;
 
@@ -66,7 +68,7 @@
                     display: inline-block;
                     float: left;
                     width: 50px;
-                    height: auto;
+                    height: 50px;
                     margin: 0 16px;
                     border-radius: 25px;
                 }
@@ -142,8 +144,15 @@
 
         .categories {
             display: block;
+            flex: 1;
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             @media (max-width: 720px) {
+                flex: none;
                 display: none;
                 padding: 8px 0 16px 0;
 
@@ -153,8 +162,8 @@
             .category {
                 display: block;
                 padding: 6px 16px;
-                height: 26px;
-                line-height: 14px;
+                height: 32px;
+                line-height: 20px;
 
                 will-change: background-color;
                 transition: background-color .2s ease;
@@ -170,6 +179,7 @@
                     display: inline-block;
                     width: 14px;
                     height: 14px;
+                    margin: 3px 0;
                     line-height: 14px;
                     border-radius: 2px;
 
@@ -186,7 +196,6 @@
                     vertical-align: top;
                     margin-left: 8px;
                     font-size: 14px;
-                    line-height: 1;
                     font-weight: 300;
                     color: lighten(@color-bromic-side, 75%);
                     overflow: hidden;
@@ -199,7 +208,6 @@
                     margin-left: 6px;
                     vertical-align: top;
                     font-size: 14px;
-                    line-height: 1;
                     font-weight: 300;
                     color: lighten(@color-bromic-side, 50%);
                 }
@@ -379,13 +387,13 @@
 
     z-index: 200;
 
-    padding-bottom: 16px;
+    padding: 16px 0;
+    background-color: @color-bromic-side;
 
     @media (max-width: 720px) {
         display: block;
         position: relative;
         width: 100%;
-        background-color: @color-bromic-side;
         padding: 24px 0 16px 0;
     }
 

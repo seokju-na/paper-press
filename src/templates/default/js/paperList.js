@@ -47,6 +47,8 @@ function _selectedPaper(tagName) {
 function listenHashChanged() {
     window.addEventListener('hashchange', function() {
         var tagName = location.hash.slice(1, location.hash.length);
+        tagName = decodeURI(tagName);
+
         if (tagName === '') tagName = null;
 
         _filterPapers(tagName);
