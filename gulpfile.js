@@ -34,7 +34,6 @@ const paths = {
         templateConfigJSON['build-path']['libs']
 };
 
-
 gulp.task('imgs', function(cb) {
     gulp.src(paths.images)
         .pipe(imageop({
@@ -91,4 +90,5 @@ gulp.task('libs', function(cb) {
         });
 });
 
-gulp.task('default', ['imgs', 'favicon', 'js', 'styles', 'libs']);
+gulp.task('build', ['imgs', 'favicon', 'js', 'styles', 'libs']);
+gulp.task('default', ['build']);
