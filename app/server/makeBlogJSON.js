@@ -7,6 +7,7 @@ const rl = readline.createInterface(process.stdin, process.stdout);
 
 const errorCodes = require('../utils/errorCodes');
 const paths = require('../utils/paths');
+const blogJSONManager = require('../utils/blogJSONManager');
 const templates = require('../utils/templates.json');
 
 function _checkIfHasCorrectBlogInfo() {
@@ -37,6 +38,9 @@ function _checkIfHasCorrectBlogInfo() {
             blogJSON.hasOwnProperty('email') &&
             blogJSON.hasOwnProperty('papers'))) _hasBlogInfo = false;
     }
+
+    if (_hasBlogInfo)
+        blogJSONManager.initBlogJSON(blogJSON);
 
     return _hasBlogInfo;
 }
@@ -161,6 +165,8 @@ var makeBlogJSON = function(_callback) {
                     function(err) {
                         if (err) callback(errorCodes.WRITE_BLOG_JSON);
                         else {
+                            blogJSONManager.initBlogJSON(newBlogInfo);
+
                             console.log("Blog configure file successfully saved in " +
                                 "src/blog.json".bold + "!");
                             console.log(" ");

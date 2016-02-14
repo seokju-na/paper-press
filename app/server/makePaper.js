@@ -5,31 +5,11 @@ var shortid = require('shortid');
 
 const paths = require('../utils/paths');
 const errorCodes = require('../utils/errorCodes');
+const blogJSONManager = require('../utils/blogJSONManager');
 
 var _paperFileNames = null;
-var _blogJSON = null;
 
 
-function updateBlogJSON(_callback, paper) {
-    var paperId = paper['paperId'];
-
-    _blogJSON['papers'][paperId] = {
-        title: paper['title'],
-        summary: paper['summary'],
-        titleImage: paper['titleImage'],
-        tags: paper['tags'],
-        date: (new Date(paper['date'])).toJSON()
-    };
-
-    fs.writeFile(
-        paths.BLOG_JSON,
-        JSON.stringify(_blogJSON), 'utf8',
-        function(err) {
-            if (err) _callback(errorCodes.WRITE_BLOG_JSON, null);
-            else _callback(null, paperId);
-        }
-    );
-}
 
 function _getPaperFileNames(_callback) {
     if (_paperFileNames !== null) {
@@ -47,14 +27,19 @@ function _getPaperFileNames(_callback) {
 
 
 var makePaper = function(paperId, paper, _callback) {
-    _blogJSON = require(paths.BLOG_JSON);
-
     const title = paper['title'];
     const summary = paper['summary'];
     const texts = paper['texts'];
     const titleImage = paper['titleImage'];
-    const tags = paper['tags'];
+    var tags = paper['tags'];
     const date = paper['date'];
+
+    if (tags.length === 0)
+        tags.push('Untagged');
+
+    tags = _.map(tags, function(tag) {
+        return tag.replace(/\s+/g, '');
+    });
 
     var isNewPaper = (paperId === null);
 
@@ -86,14 +71,20 @@ var makePaper = function(paperId, paper, _callback) {
                 }
             );
         },
-        function(fileName, callback) {
-            updateBlogJSON(callback, {
-                paperId: fileName,
+        function(paperId, callback) {
+            var _blogJSON = blogJSONManager.getBlogJSON();
+
+            _blogJSON['papers'][paperId] = {
                 title: title,
                 summary: summary,
                 titleImage: titleImage,
                 tags: tags,
-                date: date
+                date: (new Date(date)).toJSON()
+            };
+
+            blogJSONManager.updateBlogJSON(_blogJSON, function(err) {
+                if (err) callback(err);
+                else callback(null);
             });
         }
     ], function(err, res) {

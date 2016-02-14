@@ -4,24 +4,10 @@ var _ = require('underscore');
 
 const paths = require('../utils/paths');
 const errorCodes = require('../utils/errorCodes');
+const blogJSONManager = require('../utils/blogJSONManager');
 
-var _blogJSON = null;
-
-
-function _updateBlogJSON(paperId, _callback) {
-    delete _blogJSON['papers'][paperId];
-
-    fs.writeFile(paths.BLOG_JSON,
-        JSON.stringify(_blogJSON), 'utf8',
-        function(err) {
-            if (err) _callback(errorCodes.WRITE_BLOG_JSON);
-            else _callback(null);
-        });
-}
 
 var deletePaper = function(paperId, _callback) {
-    _blogJSON = require(paths.BLOG_JSON);
-
     async.waterfall([
         function(callback) {
             fs.unlink(paths.PAPERS + paperId + '.md', function(err) {
@@ -30,10 +16,13 @@ var deletePaper = function(paperId, _callback) {
             })
         },
         function(callback) {
-            _updateBlogJSON(paperId, function(err) {
+            var _blogJSON = blogJSONManager.getBlogJSON();
+            delete _blogJSON['papers'][paperId];
+
+            blogJSONManager.updateBlogJSON(_blogJSON, function(err) {
                 if (err) callback(err);
                 else callback(null);
-            });
+            })
         }
     ], function(err,res) {
         if (err) _callback(err);

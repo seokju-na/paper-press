@@ -1,27 +1,27 @@
 var fs = require('fs');
 var exec = require('child_process').exec;
 var async = require('async');
+var del = require('del');
 
 const paths = require('../utils/paths');
 const checkSurgeLogin = require('../utils/checkSurgeLogin');
+const blogJSONManager = require('../utils/blogJSONManager');
 const errorCodes = require('../utils/errorCodes');
 
 var makeIndexPage = require('./makeIndexPage');
 var makePaperPage = require('./makePaperPage');
 
-var _blogJSON = null;
 
 var deploy = function(_callback) {
-
     async.waterfall([
         function(callback) {
-            fs.readFile(paths.BLOG_JSON, 'utf8', function(err, data) {
-                if (err) callback(errorCodes.READ_BLOG_JSON);
-                else {
-                    _blogJSON = JSON.parse(data);
-                    callback(null);
-                }
-            });
+              del([paths.DIST + '*.*'], {
+                  force: true
+              }).then(function() {
+                  callback(null);
+              }).catch(function(err) {
+                  callback(err);
+              });
         },
 
         function(callback) {
@@ -53,7 +53,9 @@ var deploy = function(_callback) {
         },
 
         function(callback) {
-            exec(paths.SURGE + ' -p ' + paths.DIST + ' -d ' + _blogJSON['domain'],
+            exec(paths.SURGE +
+                ' -p ' + paths.DIST +
+                ' -d ' + (blogJSONManager.getBlogJSON())['domain'],
                 function(err, stdout, stderr) {
                     if (err) callback(errorCodes.SURGE_DEPLOY);
                     else callback(null);
@@ -65,7 +67,7 @@ var deploy = function(_callback) {
         else {
             console.log("[paper-press] ".green + "" +
                 "Blog deployed on " + "http://".bold +
-                (_blogJSON['domain'].toString()).bold);
+                (blogJSONManager.getBlogJSON())['domain'].toString().bold);
             _callback(null);
         }
     });

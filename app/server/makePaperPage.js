@@ -27,12 +27,9 @@ var md = new Remarkable({
 
 const paths = require('../utils/paths');
 const errorCodes = require('../utils/errorCodes');
+const blogJSONManager = require('../utils/blogJSONManager');
 
 var _paperTemplateData = null;
-var _templateConfigJSON = null;
-var _templatePath = null;
-var _blogJSON = null;
-
 var _receivedData = null;
 
 
@@ -43,7 +40,7 @@ function _renderHtml(fileName, fileData, _callback) {
     async.waterfall([
         function(callback) {
             _getPaperTemplateData(function() {
-                var blog = _.clone(_blogJSON);
+                var blog = blogJSONManager.getBlogJSON();
                 var paper = blog['papers'][paperId];
                 delete blog['papers'];
 
@@ -92,6 +89,11 @@ function _getPaperTemplateData(callback) {
         return callback(null);
     }
 
+    var template = (blogJSONManager.getBlogJSON())['template'];
+
+    var _templatePath = paths.TEMPLATES + template + '/';
+    var _templateConfigJSON = require(_templatePath + 'pp.config.json');
+
     fs.readFile(_templatePath + _templateConfigJSON['templates']['paper'],
         'utf8',
         function(err, data) {
@@ -121,10 +123,6 @@ function _renderEachFiles(files, _callback) {
 
 
 var makePaperPage = function(receivedData, _callback) {
-    _blogJSON = require(paths.BLOG_JSON);
-    _templatePath = paths.TEMPLATES + _blogJSON['template'] + '/';
-    _templateConfigJSON = require(_templatePath + 'pp.config.json');
-
     _receivedData = receivedData;
 
     async.waterfall([
