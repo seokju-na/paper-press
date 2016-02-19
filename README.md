@@ -13,10 +13,10 @@ PaperPress is a node.js tool that can make static page-based blogs simply, with 
 
 ## Features
 
-<p align="center">**[Watch introduction video](https://youtu.be/DX-QX4aliJQ)**</p>
+<p align="center"><a href="https://youtu.be/DX-QX4aliJQ">Watch Introduce Video</a></p>
 
 
-[![img](https://github.com/seokju-na/paper-press/blog/master/docs/imgs/Video.png)](https://youtu.be/DX-QX4aliJQ)
+[![img](https://github.com/seokju-na/paper-press/blob/master/docs/imgs/Video.png)](https://youtu.be/DX-QX4aliJQ)
 
 
 * You can concentrate fully on writing without having to consider problems like setting server or installing databases.
@@ -108,13 +108,16 @@ MIT License
 
 ## To know further
 
-* <a id="paper-press-help-1" href="#paper-press-sel-1">About static page-based blog</a>
+#### <a id="paper-press-help-1" href="#paper-press-sel-1">About static page-based blog</a>
+
 Static page-based blog refers to a blog that is has all pages consisted in the blog in HTML so that it only shows completed pages, instead of making and composing pages through a server.
 
-* <a id="paper-press-help-2" href="#paper-press-sel-2">Setting the custom domain</a>
+#### <a id="paper-press-help-2" href="#paper-press-sel-2">Setting the custom domain</a>
+
 You can add custom domain for free by using surge. Refer to [Adding a custom domain](https://surge.sh/help/adding-a-custom-domain) for more information.
 
-* <a id="paper-press-help-3" href="#paper-press-sel-3">Deleting a blog</a>
+#### <a id="paper-press-help-3" href="#paper-press-sel-3">Deleting a blog</a>
+
 Delete a blog by using surge. If the name of your domain is ``example.surge.sh``, enter the order as follows:
 ```shell
 $ surge teardown example.surge.sh

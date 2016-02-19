@@ -9,10 +9,10 @@ PaperPress는 마크다운(Markdown)으로 작성한 글들을 무료 웹사이�
 
 ## 특징
 
-<p align="center">**[소개 동영상 보기](https://youtu.be/DX-QX4aliJQ)**</p>
+<p align="center"><a href="https://youtu.be/DX-QX4aliJQ">소개 동영상 보기</a></p>
 
 
-[![img](https://github.com/seokju-na/paper-press/blog/master/docs/imgs/Video.png)](https://youtu.be/2IUwsdlw0to)
+[![img](https://github.com/seokju-na/paper-press/blob/master/docs/imgs/Video.png)](https://youtu.be/2IUwsdlw0to)
 
 
 
@@ -113,13 +113,16 @@ MIT License
 
 ## 좀 더 알아보기
 
-* <a id="paper-press-help-1" href="#paper-press-sel-1">정적 페이지 기반 블로그</a>
+#### <a id="paper-press-help-1" href="#paper-press-sel-1">정적 페이지 기반 블로그</a>
+
 정적 페이지 기반 블로그란 서버 측에서 페이지를 구성하고 만드는 것이 아닌 블로그를 구성하는 모든 페이지를 HTML으로 구성해 이미 완성된 페이지를 보여주기만 하는 블로그를 말합니다.
 
-* <a id="paper-press-help-2" href="#paper-press-sel-2">커스텀 도메인 설정하기</a>
+#### <a id="paper-press-help-2" href="#paper-press-sel-2">커스텀 도메인 설정하기</a>
+
 surge를 이용하여 무료로 커스텀 도메인을 추가할 수 있습니다. 자세한 내용은 [Adding a custom domain](https://surge.sh/help/adding-a-custom-domain)을 참고하세요.
 
-* <a id="paper-press-help-3" href="#paper-press-sel-3">블로그 삭제하기</a>
+#### <a id="paper-press-help-3" href="#paper-press-sel-3">블로그 삭제하기</a>
+
 surge를 이용하여 블로그를 삭제합니다. 만약 자신의 도메인 이름이 ``example.surge.sh``인 경우 다음과 같이 명령어를 입력합니다.
 ```shell
 $ surge teardown example.surge.sh
