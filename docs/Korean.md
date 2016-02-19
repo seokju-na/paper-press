@@ -9,7 +9,7 @@ PaperPress는 마크다운(Markdown)으로 작성한 글들을 무료 웹사이�
 
 ## 특징
 
-<p align="center"><a href="https://youtu.be/DX-QX4aliJQ">소개 동영상 보기</a></p>
+<p align="center"><a href="https://youtu.be/2IUwsdlw0to">소개 동영상 보기</a></p>
 
 
 [![img](https://github.com/seokju-na/paper-press/blob/master/docs/imgs/Video.png)](https://youtu.be/2IUwsdlw0to)

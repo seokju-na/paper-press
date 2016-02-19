@@ -13,10 +13,10 @@ PaperPress is a node.js tool that can make static page-based blogs simply, with 
 
 ## Features
 
-<p align="center"><a href="https://youtu.be/DX-QX4aliJQ">Watch Introduce Video</a></p>
+<p align="center"><a href="https://youtu.be/2IUwsdlw0to">Watch Introduce Video</a></p>
 
 
-[![img](https://github.com/seokju-na/paper-press/blob/master/docs/imgs/Video.png)](https://youtu.be/DX-QX4aliJQ)
+[![img](https://github.com/seokju-na/paper-press/blob/master/docs/imgs/Video.png)](https://youtu.be/2IUwsdlw0to)
 
 
 * You can concentrate fully on writing without having to consider problems like setting server or installing databases.
