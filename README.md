@@ -96,7 +96,36 @@ Setup the domain of blog. PaperPress using [surge](https://surge.sh/) as CDN, so
 
 After entering all items, the entered setting, through ``src/blog.config.json`` path, a setup file is created in JSON file format.
 
-When blog setup file is created, you can write by accessing [http://127.0.0.1:8888](http://127.0.0.1:8888)
+When blog setup file is created, you can write post by accessing [http://127.0.0.1:8888](http://127.0.0.1:8888)
+
+
+## Usage
+
+#### Run
+
+```shell
+$ paper-press
+```
+
+After command, you can write post and deploy blog by accessing [http://127.0.0.1:8888](http://127.0.0.1:8888).
+
+
+#### Open image folder
+
+```shell
+$ paper-press img
+```
+
+Open the folder where images, which used in blog, are located. You can use your image by move images to this folder.
+
+
+#### Open paper folder
+
+```shell
+$ paper-press papers
+```
+
+Open the folder where posts are located.
 
 
 
